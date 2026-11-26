@@ -1,6 +1,11 @@
+import { Link } from "react-router-dom";
+
 function ProductCard({ item }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-xl border border-border bg-card">
+    <Link
+      to={`/products/${item.id}`}
+      className="flex flex-col overflow-hidden rounded-xl border border-border bg-card"
+    >
       <img
         src={item.image}
         alt={item.description}
@@ -20,7 +25,7 @@ function ProductCard({ item }) {
           }).format(item.price)}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
 

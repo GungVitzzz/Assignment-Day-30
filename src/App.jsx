@@ -1,24 +1,29 @@
 import Header from "./components/layout/Header";
 import Navbar from "./components/layout/Navbar";
-import CatalogHeader from "./components/catalog/CatalogHeader";
-import CatalogSection from "./components/catalog/CatalogSection";
 import Footer from "./components/layout/Footer";
+import HomePage from "./pages/HomePage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <div className="z-50 border-b border-border bg-background">
-        <Header />
-        <Navbar />
+    <BrowserRouter>
+      <div>
+        <div className="z-50 border-b border-border bg-background">
+          <Header />
+          <Navbar />
+        </div>
+
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/products/:id" element={<ProductDetailPage />} />
+          </Routes>
+        </main>
+
+        <Footer />
       </div>
-
-      <main>
-        <CatalogHeader />
-        <CatalogSection />
-      </main>
-
-      <Footer />
-    </div>
+    </BrowserRouter>
   );
 }
 

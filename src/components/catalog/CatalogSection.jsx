@@ -21,14 +21,33 @@ function CatalogSection() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => {
+    const productsRequest = fetch("https://fakestoreapi.com/products").then(
+      (response) => {
         if (!response.ok) {
           throw new Error("Gagal mengambil data produk.");
         }
         return response.json();
+      }
+    );
+    const categoriesRequest = fetch(
+      "https://fakestoreapi.com/products/categories"
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Gagal mengambil kategori produk.");
+        }
+        return response.json();
       })
       .then((data) => {
+        console.log("Kategori produk:", data);
+        if (!Array.isArray(data)) {
+          throw new Error("Data kategori tidak valid.");
+        }
+        setCategories(data);
+      });
+
+    Promise.all([productsRequest, categoriesRequest])
+      .then(([data]) => {
         if (!Array.isArray(data) || data.length === 0) {
           throw new Error("Data produk tidak tersedia.");
         }
@@ -41,7 +60,7 @@ function CatalogSection() {
       })
       .catch((error) => {
         console.error("Gagal ambil data:", error);
-        setError("Gagal memuat produk. Silakan coba lagi.");
+        setError("Gagal memuat katalog. Silakan coba lagi.");
       })
       .finally(() => setLoading(false));
   }, []);
@@ -65,7 +84,6 @@ function CatalogSection() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-  const categories = [...new Set(products.map((item) => item.category))];
 
   return (
     <section>
