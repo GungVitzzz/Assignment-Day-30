@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/layout/Container";
+import { isProduct } from "@/lib/isProduct";
 
 function ProductDetailPage() {
   const { id } = useParams();
@@ -19,6 +20,10 @@ function ProductDetailPage() {
         return response.json();
       })
       .then((data) => {
+        if (!isProduct(data)) {
+          throw new Error("Data produk tidak valid.");
+        }
+
         console.log("Detail produk:", data);
         setProduct(data);
       })

@@ -5,7 +5,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
     <nav aria-label="Pagination" className="flex items-center justify-center gap-2">
       <Button
         variant="outline"
-        disabled={currentPage === 1}
+        disabled={currentPage <= 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
         Previous
@@ -24,7 +24,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       )}
       <Button
         variant="outline"
-        disabled={currentPage === totalPages}
+        disabled={currentPage >= totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
         Next
